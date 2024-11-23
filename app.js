@@ -1,24 +1,16 @@
 const Hapi = require('@hapi/hapi');
 const Inert = require('@hapi/inert');
 const Vision = require('@hapi/vision');
-const multer = require('multer');
 const uuid = require('uuid');
-const { PassThrough } = require('stream');
 
 function predictImage(imageBuffer) {
     const isCancer = Math.random() > 0.5;
     return isCancer ? 'Cancer' : 'Non-cancer';
 }
 
-const storage = multer.memoryStorage();
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 1000000 },
-}).single('image');
-
 const server = Hapi.server({
     port: 3000,
-    host: 'localhost',
+    host: '0.0.0.0',
 });
 
 async function registerPlugins() {
